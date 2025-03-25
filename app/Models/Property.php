@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Property extends Model
 {
-    protected $fillable = ['name', 'description', 'price', 'type', 'location', 'user_id', 'status'];
+    protected $fillable = ['name', 'description', 'price', 'type', 'location', 'user_id', 'status', 'buyer_id'];
 
     public function user()
     {
@@ -17,5 +17,10 @@ class Property extends Model
     {
         return $this->hasMany(Review::class);
     }
-}
 
+
+    public function buyer()
+    {
+        return $this->belongsTo(User::class, 'buyer_id');
+    }
+}

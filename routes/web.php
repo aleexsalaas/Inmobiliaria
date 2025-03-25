@@ -31,19 +31,24 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('properties', PropertyController::class)->except(['index', 'show']);
 
     Route::post('properties/{property}/rate', [PropertyController::class, 'rate'])->name('properties.rate');
-});
 
-// Rutas del perfil del usuario
-Route::middleware('auth')->group(function () {
+    Route::delete('/properties/{id}', [PropertyController::class, 'destroy'])->name('properties.destroy');
+
+    Route::post('/properties/{property}/buy', [PropertyController::class, 'buy'])->name('properties.buy');
+
+    // En routes/web.php
+Route::post('properties/{property}/purchase', [PropertyController::class, 'purchase'])->name('properties.purchase');
+
+
+
     Route::get('/profile/manage', [ProfileController::class, 'manage'])->name('profile.manage');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
 // Rutas del dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth')->name('dashboard');
-
-
 Route::post('properties/{property}/reviews', [ReviewController::class, 'store'])->name('reviews.store')->middleware('auth');
 
 

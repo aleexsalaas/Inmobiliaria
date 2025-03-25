@@ -19,6 +19,14 @@
             <p class="text-sm mt-2">
                 <span class="font-bold">Propietario:</span> {{ $property->user->name }}
             </p>
+            @if(auth()->check() && $property->status == 'available' && $property->user_id != auth()->id())
+    <form action="{{ route('properties.buy', $property->id) }}" method="POST">
+        @csrf
+        <button type="submit" class="bg-blue-500 text-green px-4 py-2 rounded">Comprar</button>
+    </form>
+@endif
+
+
             <a href="{{ route('properties.index') }}" class="text-blue-500 mt-4 inline-block">Ir atrás</a>
         </div>
 

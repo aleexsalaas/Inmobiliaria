@@ -38,4 +38,10 @@ public function isAdmin()
     return $this->role === 'admin';
 }
 
+public function purchasedProperties()
+{
+    return $this->belongsToMany(Property::class, 'purchases', 'user_id', 'property_id')
+                ->withTimestamps(); // Si es necesario
+}
+
 }

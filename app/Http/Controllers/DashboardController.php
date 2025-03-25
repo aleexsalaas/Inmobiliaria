@@ -8,9 +8,12 @@ use App\Models\Property;
 class DashboardController extends Controller
 {
     public function index()
-    {
-        $user = Auth::user();
-        $properties = Property::where('user_id', $user->id)->get();
-        return view('dashboard', compact('user', 'properties'));
-    }
+{
+    $user = auth()->user();
+    $userProperties = Property::where('user_id', $user->id)->get(); 
+    $purchasedProperties = Property::where('buyer_id', $user->id)->get();
+
+    return view('dashboard', compact('user', 'userProperties', 'purchasedProperties'));
+}
+
 }
