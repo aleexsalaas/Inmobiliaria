@@ -13,14 +13,10 @@ Route::get('/', function () {
     
 });
 
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile/partials/delete-user-form', [ProfileController::class, 'deleteUserForm'])->name('profiles.partials.delete-user-form');});
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/properties/create', [PropertyController::class, 'create'])->name('properties.create');
 });
-
+    
 
 // Rutas de propiedades (públicas)
 Route::get('properties', [PropertyController::class, 'index'])->name('properties.index');
@@ -28,22 +24,15 @@ Route::get('properties/{property}', [PropertyController::class, 'show'])->name('
 
 Route::middleware(['auth'])->group(function () {
 
-    Route::resource('properties', PropertyController::class)->except(['index', 'show']);
-
-    Route::post('properties/{property}/rate', [PropertyController::class, 'rate'])->name('properties.rate');
-
+    Route::get('properties/{property}/edit', [PropertyController::class, 'edit'])->name('properties.edit');
+    Route::patch('properties/{property}', [PropertyController::class, 'update'])->name('properties.update');
     Route::delete('/properties/{id}', [PropertyController::class, 'destroy'])->name('properties.destroy');
-
+    Route::post('properties', [PropertyController::class, 'store'])->name('properties.store');
+    Route::post('/properties/{property}/rate', [PropertyController::class, 'rate'])->name('properties.rate');
     Route::post('/properties/{property}/buy', [PropertyController::class, 'buy'])->name('properties.buy');
-
-    // En routes/web.php
-Route::post('properties/{property}/purchase', [PropertyController::class, 'purchase'])->name('properties.purchase');
-
-
-
+    Route::post('properties/{property}/purchase', [PropertyController::class, 'purchase'])->name('properties.purchase');
     Route::get('/profile/manage', [ProfileController::class, 'manage'])->name('profile.manage');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 
